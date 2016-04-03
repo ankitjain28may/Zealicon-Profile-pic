@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Image Edit</title>
+    <title>Image Edit</title>
 
 </head>
 <body>
@@ -58,13 +58,13 @@ elseif ($imageFileType == "png")
 $myimage= imagecreatefrompng($picname);
 }
 $myimagez= imagecreatefrompng('dal.png');
-echo $width1=imagesx($myimage);
-echo $height1=imagesy($myimage);
-echo $width2=imagesx($myimagez).'<br>';
-echo $height2=imagesy($myimagez);
+ $width1=imagesx($myimage);
+ $height1=imagesy($myimage);
+ $width2=imagesx($myimagez);
+ $height2=imagesy($myimagez);
 $x=$width1-$width2;
 
-@imagecopy($myimage, $myimagez, $x, 0,0,0, $width2, $height1);
+@imagecopy($myimage, $myimagez, $x, 0,0,0, $width1, $height1);
 $filename = ".jpeg";
 $path ='uploads/'.basename( $_FILES["fileToUpload"]["name"]);
 imagejpeg($myimage,$path);
@@ -78,7 +78,7 @@ else
 
 
 
-<form action="index.php" method="post" enctype="multipart/form-data">
+<form action="ind.php" method="post" enctype="multipart/form-data">
     Select image to upload:
     <input type="file" name="fileToUpload" id="fileToUpload">
     <input type="submit" value="Upload Image" name="submit">
