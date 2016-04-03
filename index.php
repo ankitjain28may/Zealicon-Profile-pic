@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Image Edit</title>
+    <title>Zealicon | Get Your Zeal Image</title>
 
 </head>
 <body>
@@ -49,6 +49,10 @@ if ($uploadOk == 0) {
     }
 }
 $picname='uploads/'.basename( $_FILES["fileToUpload"]["name"]);
+
+
+
+
 if($imageFileType=="jpg" || $imageFileType=="jpeg")
 {
 $myimage= imagecreatefromjpeg($picname);
@@ -57,17 +61,47 @@ elseif ($imageFileType == "png")
 {
 $myimage= imagecreatefrompng($picname);
 }
+
+
+
+
+
+
 $myimagez= imagecreatefrompng('dal.png');
- $width1=imagesx($myimage);
+echo $width1=imagesx($myimage);
  $height1=imagesy($myimage);
  $width2=imagesx($myimagez);
  $height2=imagesy($myimagez);
+
+
+$newwidth=206;
+$newheight=272;
+$tmp=imagecreatetruecolor($newwidth,$newheight);
+
+
+
+imagecopyresampled($tmp,$myimage,0,0,0,0,$newwidth,$newheight,
+ $width1,$height1);
+
+
+//$filename = "uploads/". $_FILES['fileToUpload']['name'];
+//$filename1 = "uploads/small". $_FILES['fileToUpload']['name'];
+
+//imagejpeg($tmp,$filename,100);
+//imagejpeg($tmp1,$filename1,100);
+
+//imagedestroy($myimage);
+//imagedestroy($tmp);
+//imagedestroy($tmp1);
+
+
+
 $x=$width1-$width2;
 
-@imagecopy($myimage, $myimagez, $x, 0,0,0, $width1, $height1);
+@imagecopy($tmp, $myimagez, 0,0,0,0, $width1, $height1);
 $filename = ".jpeg";
 $path ='uploads/'.basename( $_FILES["fileToUpload"]["name"]);
-imagejpeg($myimage,$path);
+imagejpeg($tmp,$path);
 ?>
 <img src="<?php echo $path;?>">
 <?php
@@ -77,11 +111,11 @@ else
 ?>
 
 
-
-<form action="ind.php" method="post" enctype="multipart/form-data">
+<h1>Upload Your Profile Image to get your Zeal Image</h1>
+<form action="index.php" method="post" enctype="multipart/form-data">
     Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <input type="submit" value="Upload Image" name="submit">
+    <input type="file" name="fileToUpload" id="fileToUpload"><br>
+    <input type="submit" value="Upload Image" name="submit"><br>
 </form>
 <?php
 }
