@@ -6,6 +6,7 @@
 <body>
 
 <?php
+session_start();
 if(isset($_POST["submit"])) {
 $target_dir = "uploads/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
@@ -47,7 +48,7 @@ if ($uploadOk == 0) {
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
-}
+
 $picname='uploads/'.basename( $_FILES["fileToUpload"]["name"]);
 
 
@@ -102,12 +103,18 @@ $x=$width1-$width2;
 $filename = ".jpeg";
 $path ='uploads/'.basename( $_FILES["fileToUpload"]["name"]);
 imagejpeg($tmp,$path);
+imagedestroy($tmp);
+imagedestroy($myimage);
+imagedestroy($myimagez);
+$_SESSION['path']=$path;
+}
 ?>
 <img src="<?php echo $path;?>">
 <?php
 }
 else
 {
+    @unlink($_SESSION['path']);
 ?>
 
 
