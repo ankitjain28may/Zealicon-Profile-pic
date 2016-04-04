@@ -1,137 +1,146 @@
-<html>
-<head>
-    <title>Zealicon | Get Your Zeal Image</title>
-
-</head>
-<body>
-
 <?php
 session_start();
-if(isset($_POST["submit"])) {
-$target_dir = "uploads/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-$uploadOk = 1;
-$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-// Check if image file is a actual image or fake image
-
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    if($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".";
-        $uploadOk = 1;
-    } else {
-        echo "File is not an image.";
-        $uploadOk = 0;
-    }
-
-// Check if file already exists
-if (file_exists($target_file)) {
-    echo "Sorry, file already exists.";
-    $uploadOk = 0;
-}
-// Check file size
-if ($_FILES["fileToUpload"]["size"] > 500000) {
-    echo "Sorry, your file is too large.";
-    $uploadOk = 0;
-}
-// Allow certain file formats
-if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" ) {
-    echo "Sorry, only JPG, JPEG, PNG files are allowed.";
-    $uploadOk = 0;
-}
-// Check if $uploadOk is set to 0 by an error
-if ($uploadOk == 0) {
-    echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
-} else {
-    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-    } else {
-        echo "Sorry, there was an error uploading your file.";
-    }
-
-$picname='uploads/'.basename( $_FILES["fileToUpload"]["name"]);
-
-
-
-
-if($imageFileType=="jpg" || $imageFileType=="jpeg")
-{
-$myimage= imagecreatefromjpeg($picname);
-}
-elseif ($imageFileType == "png") 
-{
-$myimage= imagecreatefrompng($picname);
-}
-
-
-
-
-
-
-$myimagez= imagecreatefrompng('dal.png');
-echo $width1=imagesx($myimage);
- $height1=imagesy($myimage);
- $width2=imagesx($myimagez);
- $height2=imagesy($myimagez);
-
-
-$newwidth=206;
-$newheight=272;
-$tmp=imagecreatetruecolor($newwidth,$newheight);
-
-
-
-imagecopyresampled($tmp,$myimage,0,0,0,0,$newwidth,$newheight,
- $width1,$height1);
-
-
-//$filename = "uploads/". $_FILES['fileToUpload']['name'];
-//$filename1 = "uploads/small". $_FILES['fileToUpload']['name'];
-
-//imagejpeg($tmp,$filename,100);
-//imagejpeg($tmp1,$filename1,100);
-
-//imagedestroy($myimage);
-//imagedestroy($tmp);
-//imagedestroy($tmp1);
-
-
-
-$x=$width1-$width2;
-
-@imagecopy($tmp, $myimagez, 0,0,0,0, $width1, $height1);
-$filename = ".jpeg";
-$path ='uploads/'.basename( $_FILES["fileToUpload"]["name"]);
-imagejpeg($tmp,$path);
-imagedestroy($tmp);
-imagedestroy($myimage);
-imagedestroy($myimagez);
-$_SESSION['path']=$path;
-}
-?>
-<img src="<?php echo $path;?>">
-<?php
-}
-else
-{
-    @unlink($_SESSION['path']);
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Z'16 | Get Zeal</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="croppie.css" />
+    <script type="text/javascript" src="js/script.js"></script>
 
-<h1>Upload Your Profile Image to get your Zeal Image</h1>
-<form action="index.php" method="post" enctype="multipart/form-data">
-    Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload"><br>
-    <input type="submit" value="Upload Image" name="submit"><br>
+</head>
+
+<body <?php 
+ if(!empty($_POST['bmw']))
+ {
+    echo 'onload="displayMessage();"'; } ?> >
+    <div class="banner">
+        <div class="navbar">
+            <a href="http://zealicon.in/" class="header"><img src="assets/zeal_logo.png"></a>
+            <a href="http://getzeal.esy.es/" class="link">Zeal<strong>Avatar</strong></a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="col" id="text">
+            <h1 id="greeting">Get The<br> Zeal</h1>
+            <p id="supplement">Upload your profile pic to get your exclusive <strong> &nbsp;Zealfie .</strong><br>
+            </p>
+            <sub># Feel The Zeal</sub>
+        </div>
+
+        <?php
+
+        if(!empty($_POST['bmw']))
+        {
+
+
+            @$data= $_POST['hidden1'];
+            $data =substr($data, 22);
+            $data = base64_decode($data);
+            @$myimage = imagecreatefromstring($data);
+            $path='uploads/abc.jpg';
+            imagejpeg($myimage,$path);
+
+            $myimage= imagecreatefromjpeg('uploads/abc.jpg');
+            $myimagez= imagecreatefrompng('dall.png');
+            $width1=imagesx($myimage);
+            $height1=imagesy($myimage);
+            $width2=imagesx($myimagez);
+            $height2=imagesy($myimagez);
+
+
+            $newwidth=206;
+            $newheight=272;
+            $tmp=imagecreatetruecolor($newwidth,$newheight);
+            $image=imagecreatetruecolor($newwidth,$newheight);
+            $transparency=imagecolortransparent($myimagez);
+
+             imagealphablending($tmp, false);
+            $color = imagecolorallocatealpha($tmp, 0, 0, 0, 127);
+            imagefill($tmp, 0, 0, $color);
+            imagesavealpha($tmp, true);
+
+
+            imagecopyresampled($image,$myimage,0,0,0,0,$newwidth,$newheight,$width1,$height1);
+            imagecopyresampled($tmp,$myimagez,0,0,0,0,$newwidth,$newheight,$width2,$height2);
+
+
+            @imagecopy($image, $tmp, 0,0,0,0, $width1, $height1);
+            $filename = ".jpg";
+            $path ='uploads/abc'.$filename;
+            imagejpeg($image,$path);
+
+            imagedestroy($tmp);
+            imagedestroy($image);
+            imagedestroy($myimagez);
+
+        ?>
+
+        <div class="col" id="io">
+            <div id="image">
+                <img src="uploads/abc.jpg">
+            </div>
+            <div class="buttons">
+                <a href="index.php" id="apply" class="btn upload-result upload">Choose Another File
+                <a class="btn" href="uploads/abc.jpg" id="download" download="uploads/abc.jpg">Download</a>
+            </div>
+        </div>
+
+        <?php
+        }
+        else
+        {
+    ?>
+
+        <div class="col" id="io">
+            <div id="upload-demo">
+                
+            </div>
+            <div class="buttons">
+                <input type="file" id="upload" value="Choose a file" accept="image/*" />
+                <button id="apply-btn" class="btn upload-result">Apply</button>
+            </div>
+            <div class="crop">
+                
+            </div>
+        </div>
+        <?php
+    }
+    ?>
+    <form name="myform" action="" method="POST">
+        <input type="hidden" name="hidden1" id="hidden1"/>
+        <input type="submit" style="display:none;" name="bmw" id="bmw">
 </form>
-<?php
-}
-?>
 
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>')</script>
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 
-
+        <script src="croppie.js"></script>
+            <script src="fun.js"></script>
+       
+       <script>
+            Demo.init();
+</script>
 
 </body>
-
-
 </html>
+
+
+
+
+<!-- <div class="col" id="text">
+    <h1></h1>
+    <p></p>
+    <br>
+        <sub># Feel The Zeal</sub>
+    
+</div> -->

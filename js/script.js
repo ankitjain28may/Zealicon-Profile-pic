@@ -2,7 +2,7 @@ var greet=[
 	"You look \nAwesome !" , 
 	"This one's a \nKiller !" ,
 	"That's an\nAmazing picture !",
-	"You are looking\nGreat !"
+	"You are looking \nGreat !"
 
 ]
 console.log(greet);
