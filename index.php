@@ -56,7 +56,7 @@ session_start();
             $height2=imagesy($myimagez);
 
 
-            $newwidth=250;
+            $newwidth=200;
             $newheight=300;
             $tmp=imagecreatetruecolor($newwidth,$newheight);
             $image=imagecreatetruecolor($newwidth,$newheight);
