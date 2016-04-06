@@ -56,8 +56,8 @@ session_start();
             $height2=imagesy($myimagez);
 
 
-            $newwidth=206;
-            $newheight=272;
+            $newwidth=250;
+            $newheight=300;
             $tmp=imagecreatetruecolor($newwidth,$newheight);
             $image=imagecreatetruecolor($newwidth,$newheight);
             $transparency=imagecolortransparent($myimagez);
@@ -72,7 +72,7 @@ session_start();
             imagecopyresampled($tmp,$myimagez,0,0,0,0,$newwidth,$newheight,$width2,$height2);
 
 
-            @imagecopy($image, $tmp, 0,0,0,0, $width1, $height1);
+            @imagecopy($image, $tmp, 0,0,0,0, $newwidth, $newheight);
             $filename = ".jpg";
             $path ='uploads/abc'.$filename;
             imagejpeg($image,$path);
